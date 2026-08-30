@@ -49,4 +49,18 @@
            upstream="refs/heads/lineage-23.2"
            clone-depth="1" />
 
+  <!-- Proprietary vendor trees used by the device-tested build. -->
+  <project path="vendor/oneplus/pagani"
+           name="yankedi/proprietary_vendor_oneplus_pagani"
+           remote="github"
+           revision="ea655f85abd3bdbd000b3d8d4e14b973f0e4ba07"
+           upstream="refs/heads/lineage-23.2"
+           clone-depth="1" />
+  <project path="vendor/oneplus/sm8750-common"
+           name="TheMuppets/proprietary_vendor_oneplus_sm8750-common"
+           remote="github"
+           revision="4d1baf1a759177dd357dc0111443ee66faeec722"
+           upstream="refs/heads/lineage-23.2"
+           clone-depth="1" />
+
 </manifest>

@@ -2,7 +2,7 @@
 
 面向 OnePlus 13T（`PKX110` / `OP60F5L1` / `pagani`）的非官方 LineageOS 23.2 构建入口。
 
-本仓库基于官方 [`LineageOS/android`](https://github.com/LineageOS/android) manifest，在完整 LineageOS / Android 16 源码树中加入 pagani 设备源码，并固定已经公开的指纹修复 Fork。它不是 ROM、刷机包或 proprietary blobs 仓库，也不代表 pagani 已获得 LineageOS 官方支持。
+本仓库基于官方 [`LineageOS/android`](https://github.com/LineageOS/android) manifest，在完整 LineageOS / Android 16 源码树中加入 pagani 设备源码，并固定已经公开的指纹修复 Fork 和 Vendor 仓库。它不是 ROM 或刷机包，也不代表 pagani 已获得 LineageOS 官方支持。
 
 ## 当前状态
 
@@ -11,7 +11,7 @@
 - 设备：OnePlus 13T / `PKX110` / `pagani`
 - 指纹完整录入、亮屏认证、支付宝指纹登录/支付和 Google Play 支付验证已在记录的 2026-08-29 构建上完成实机验证。
 - AOD/熄屏指纹认证仍为 `NOT_TESTED`。
-- 四个 Fork 合并后的主线另外包含少量上游提交；当前 manifest 固定这些合并后 HEAD，但这一组合尚未重新完成整包构建和刷机验证。
+- 指纹修复内容已经通过完整 ROM、OTA 和真机验证；从全新空目录按本 manifest 完整同步并冷构建的流程尚未重新验证。
 
 完整修复说明、产物哈希和验证边界见 [`oneplus-13T-resources`](https://github.com/yankedi/oneplus-13T-resources/blob/main/docs/fingerprint-fix-2026-08-30.md)。
 
@@ -32,7 +32,7 @@ repo init \
 repo sync
 ```
 
-`repo sync` 会下载完整 LineageOS 平台源码、pagani 设备树、SM8750 内核与公共设备树，并自动使用本项目登记的四个 Fork。无需再逐个手动克隆这些仓库。
+`repo sync` 会下载完整 LineageOS 平台源码、pagani 设备树、SM8750 内核、公共设备树和构建所需的 Vendor 文件，并自动使用本项目登记的 Fork。无需再逐个手动克隆或提取 proprietary blobs。
 
 ## Manifest 中的 pagani 项目
 
@@ -45,23 +45,19 @@ repo sync
 | `kernel/oneplus/sm8750` | [`LineageOS/android_kernel_oneplus_sm8750`](https://github.com/LineageOS/android_kernel_oneplus_sm8750) | `999b95d4792d` |
 | `kernel/oneplus/sm8750-devicetrees` | [`LineageOS/android_kernel_oneplus_sm8750-devicetrees`](https://github.com/LineageOS/android_kernel_oneplus_sm8750-devicetrees) | `ebb25e3526ad` |
 | `hardware/oplus` | [`LineageOS/android_hardware_oplus`](https://github.com/LineageOS/android_hardware_oplus) | `ec3b8211676f` |
+| `vendor/oneplus/pagani` | [`yankedi/proprietary_vendor_oneplus_pagani`](https://github.com/yankedi/proprietary_vendor_oneplus_pagani) | `ea655f85abd3` |
+| `vendor/oneplus/sm8750-common` | [`TheMuppets/proprietary_vendor_oneplus_sm8750-common`](https://github.com/TheMuppets/proprietary_vendor_oneplus_sm8750-common) | `4d1baf1a7591` |
 
 LineageOS 其余平台项目继续由官方 `lineage-23.2` manifest 管理。设备相关项目固定到完整 commit SHA，以免同步时静默漂移。
 
 ## Proprietary blobs
 
-公开源码不包含 OnePlus proprietary blobs。首次构建前必须从你有权使用的设备、原厂包或现有可安装包中提取：
+本 manifest 固定并同步经过当前构建使用的两棵 Vendor 树：
 
-```bash
-cd ~/android/lineage
-source build/envsetup.sh
+- pagani 专用文件来自 `PKX110_16.0.3.501(CN01)`；
+- SM8750 common 文件来自设备树记录的 `CPH2653_16.0.9.401(EX01)` 基线。
 
-./device/oneplus/pagani/extract-files.py
-```
-
-也可以把提取源路径作为参数交给 `extract-files.py`。该脚本会同时处理 pagani 与 `sm8750-common` 所需文件。不要把生成的 `vendor/oneplus`、原厂 OTA、分区镜像、密钥或设备唯一信息提交到本公开仓库。
-
-如果 `breakfast pagani` 提示缺少 vendor makefile，先完成提取，再重新执行 `breakfast`。
+因此正常执行 `repo sync` 后无需再运行 `extract-files.py`。这些仓库包含 OnePlus、高通及其他权利人的闭源文件；公开可访问不代表获得重新授权，使用者仍须遵守原始许可和适用法律。不要向这些仓库加入原厂 OTA、设备唯一信息、密钥或用户数据。
 
 ## 构建
 
@@ -89,7 +85,7 @@ NixOS 不是 Android 官方构建宿主环境，需要在能够提供标准 Linu
 ## 更新与复现边界
 
 - 本 manifest 仓库自身跟随 LineageOS 官方 `lineage-23.2` manifest 历史。
-- `snippets/pagani.xml` 固定 pagani 相关项目；需要升级时，应在完成同源整包构建和实机回归后再更新 SHA。
+- `snippets/pagani.xml` 固定 pagani 相关源码和 Vendor 项目；需要升级时，应在完成同源整包构建和实机回归后再更新 SHA。
 - 只固定设备相关项目并不能冻结全部 LineageOS 平台源码。若要逐字节复现某次发布，应另外保存该构建生成的完整 `repo manifest -r`、构建环境、vendor 输入和产物哈希。
 - 构建成功不等于可以安全刷写。刷写前仍需确认设备型号、槽位、AVB、分区容量、备份和回滚路径。
 
