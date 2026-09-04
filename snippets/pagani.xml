@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
 
-  <!-- Replace the platform framework with the pagani fingerprint-fix fork. -->
+  <!-- Replace the platform framework with the pagani fork. -->
   <remove-project name="LineageOS/android_frameworks_base" />
   <project path="frameworks/base"
            name="yankedi/oneplus-13T_android_frameworks_base"
            remote="github"
-           revision="b788900f949f2186de40c44c53492285e14a198c"
-           upstream="refs/heads/lineage-23.2"
+           revision="refs/heads/lineage-23.2"
            groups="pdk-cw-fs,pdk-fs,sysui-studio"
            clone-depth="1" />
 
@@ -15,52 +14,44 @@
   <project path="device/oneplus/pagani"
            name="yankedi/android_device_oneplus_pagani"
            remote="github"
-           revision="4d2cd9eb9ca7f1a19cc7d89c4722ba74d564152d"
-           upstream="refs/heads/lineage-23.2"
+           revision="refs/heads/lineage-23.2"
            clone-depth="1" />
   <project path="device/oneplus/sm8750-common"
            name="yankedi/android_device_oneplus-13T_common"
            remote="github"
-           revision="62cf9629ebbbe7a9be97c20a9559fde0399e3218"
-           upstream="refs/heads/lineage-23.2"
+           revision="refs/heads/lineage-23.2"
            clone-depth="1" />
   <project path="hardware/oplus"
            name="LineageOS/android_hardware_oplus"
            remote="github"
-           revision="ec3b8211676f55ed09905c4c336356acedc040d3"
-           upstream="refs/heads/lineage-23.2"
+           revision="refs/heads/lineage-23.2"
            clone-depth="1" />
   <project path="kernel/oneplus/sm8750"
            name="LineageOS/android_kernel_oneplus_sm8750"
            remote="github"
-           revision="999b95d4792dd41fba72a7914abe897cc3ee2ecd"
-           upstream="refs/heads/lineage-23.2"
+           revision="refs/heads/lineage-23.2"
            clone-depth="1" />
   <project path="kernel/oneplus/sm8750-devicetrees"
            name="LineageOS/android_kernel_oneplus_sm8750-devicetrees"
            remote="github"
-           revision="ebb25e3526ad84cc5a1090a5a9242f33ff087bf2"
-           upstream="refs/heads/lineage-23.2"
+           revision="refs/heads/lineage-23.2"
            clone-depth="1" />
   <project path="kernel/oneplus/sm8750-modules"
            name="yankedi/android_kernel_oneplus-13T_sm8750-modules"
            remote="github"
-           revision="a9bb81bd2819a23ae56f3253981bae129313395f"
-           upstream="refs/heads/lineage-23.2"
+           revision="refs/heads/lineage-23.2"
            clone-depth="1" />
 
-  <!-- Proprietary vendor trees used by the device-tested build. -->
+  <!-- Proprietary vendor trees used by pagani. -->
   <project path="vendor/oneplus/pagani"
            name="yankedi/proprietary_vendor_oneplus_pagani"
            remote="github"
-           revision="ea655f85abd3bdbd000b3d8d4e14b973f0e4ba07"
-           upstream="refs/heads/lineage-23.2"
+           revision="refs/heads/lineage-23.2"
            clone-depth="1" />
   <project path="vendor/oneplus/sm8750-common"
            name="TheMuppets/proprietary_vendor_oneplus_sm8750-common"
            remote="github"
-           revision="4d1baf1a759177dd357dc0111443ee66faeec722"
-           upstream="refs/heads/lineage-23.2"
+           revision="refs/heads/lineage-23.2"
            clone-depth="1" />
 
 </manifest>

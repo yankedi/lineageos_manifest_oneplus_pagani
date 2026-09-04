@@ -2,7 +2,7 @@
 
 面向 OnePlus 13T（`PKX110` / `OP60F5L1` / `pagani`）的非官方 LineageOS 23.2 构建入口。
 
-本仓库基于官方 [`LineageOS/android`](https://github.com/LineageOS/android) manifest，在完整 LineageOS / Android 16 源码树中加入 pagani 设备源码，并固定已经公开的指纹修复 Fork 和 Vendor 仓库。它不是 ROM 或刷机包，也不代表 pagani 已获得 LineageOS 官方支持。
+本仓库基于官方 [`LineageOS/android`](https://github.com/LineageOS/android) manifest，在完整 LineageOS / Android 16 源码树中加入 pagani 设备源码，并跟踪已经公开的 pagani Fork 和 Vendor 仓库。它不是 ROM 或刷机包，也不代表 pagani 已获得 LineageOS 官方支持。
 
 ## 当前状态
 
@@ -36,19 +36,19 @@ repo sync
 
 ## Manifest 中的 pagani 项目
 
-| 路径 | 仓库 | 固定提交 |
+| 路径 | 仓库 | 跟踪分支 |
 |---|---|---|
-| `frameworks/base` | [`yankedi/oneplus-13T_android_frameworks_base`](https://github.com/yankedi/oneplus-13T_android_frameworks_base) | `b788900f949f` |
-| `device/oneplus/pagani` | [`yankedi/android_device_oneplus_pagani`](https://github.com/yankedi/android_device_oneplus_pagani) | `4d2cd9eb9ca7` |
-| `device/oneplus/sm8750-common` | [`yankedi/android_device_oneplus-13T_common`](https://github.com/yankedi/android_device_oneplus-13T_common) | `62cf9629ebbb` |
-| `kernel/oneplus/sm8750-modules` | [`yankedi/android_kernel_oneplus-13T_sm8750-modules`](https://github.com/yankedi/android_kernel_oneplus-13T_sm8750-modules) | `a9bb81bd2819` |
-| `kernel/oneplus/sm8750` | [`LineageOS/android_kernel_oneplus_sm8750`](https://github.com/LineageOS/android_kernel_oneplus_sm8750) | `999b95d4792d` |
-| `kernel/oneplus/sm8750-devicetrees` | [`LineageOS/android_kernel_oneplus_sm8750-devicetrees`](https://github.com/LineageOS/android_kernel_oneplus_sm8750-devicetrees) | `ebb25e3526ad` |
-| `hardware/oplus` | [`LineageOS/android_hardware_oplus`](https://github.com/LineageOS/android_hardware_oplus) | `ec3b8211676f` |
-| `vendor/oneplus/pagani` | [`yankedi/proprietary_vendor_oneplus_pagani`](https://github.com/yankedi/proprietary_vendor_oneplus_pagani) | `ea655f85abd3` |
-| `vendor/oneplus/sm8750-common` | [`TheMuppets/proprietary_vendor_oneplus_sm8750-common`](https://github.com/TheMuppets/proprietary_vendor_oneplus_sm8750-common) | `4d1baf1a7591` |
+| `frameworks/base` | [`yankedi/oneplus-13T_android_frameworks_base`](https://github.com/yankedi/oneplus-13T_android_frameworks_base) | `lineage-23.2` |
+| `device/oneplus/pagani` | [`yankedi/android_device_oneplus_pagani`](https://github.com/yankedi/android_device_oneplus_pagani) | `lineage-23.2` |
+| `device/oneplus/sm8750-common` | [`yankedi/android_device_oneplus-13T_common`](https://github.com/yankedi/android_device_oneplus-13T_common) | `lineage-23.2` |
+| `kernel/oneplus/sm8750-modules` | [`yankedi/android_kernel_oneplus-13T_sm8750-modules`](https://github.com/yankedi/android_kernel_oneplus-13T_sm8750-modules) | `lineage-23.2` |
+| `kernel/oneplus/sm8750` | [`LineageOS/android_kernel_oneplus_sm8750`](https://github.com/LineageOS/android_kernel_oneplus_sm8750) | `lineage-23.2` |
+| `kernel/oneplus/sm8750-devicetrees` | [`LineageOS/android_kernel_oneplus_sm8750-devicetrees`](https://github.com/LineageOS/android_kernel_oneplus_sm8750-devicetrees) | `lineage-23.2` |
+| `hardware/oplus` | [`LineageOS/android_hardware_oplus`](https://github.com/LineageOS/android_hardware_oplus) | `lineage-23.2` |
+| `vendor/oneplus/pagani` | [`yankedi/proprietary_vendor_oneplus_pagani`](https://github.com/yankedi/proprietary_vendor_oneplus_pagani) | `lineage-23.2` |
+| `vendor/oneplus/sm8750-common` | [`TheMuppets/proprietary_vendor_oneplus_sm8750-common`](https://github.com/TheMuppets/proprietary_vendor_oneplus_sm8750-common) | `lineage-23.2` |
 
-LineageOS 其余平台项目继续由官方 `lineage-23.2` manifest 管理。设备相关项目固定到完整 commit SHA，以免同步时静默漂移。
+LineageOS 其余平台项目继续由官方 `lineage-23.2` manifest 管理。以上项目同样跟踪各自的 `lineage-23.2` 分支；执行 `repo sync` 会更新到当时的最新提交。
 
 ## Proprietary blobs
 
@@ -85,8 +85,8 @@ NixOS 不是 Android 官方构建宿主环境，需要在能够提供标准 Linu
 ## 更新与复现边界
 
 - 本 manifest 仓库自身跟随 LineageOS 官方 `lineage-23.2` manifest 历史。
-- `snippets/pagani.xml` 固定 pagani 相关源码和 Vendor 项目；需要升级时，应在完成同源整包构建和实机回归后再更新 SHA。
-- 只固定设备相关项目并不能冻结全部 LineageOS 平台源码。若要逐字节复现某次发布，应另外保存该构建生成的完整 `repo manifest -r`、构建环境、vendor 输入和产物哈希。
+- `snippets/pagani.xml` 跟踪 pagani 相关源码和 Vendor 项目的 `lineage-23.2` 分支，因此不同时间同步得到的提交可能不同。
+- 若要复现某次构建，应保存该次同步后生成的完整 `repo manifest -r`、构建环境、vendor 输入和产物哈希。
 - 构建成功不等于可以安全刷写。刷写前仍需确认设备型号、槽位、AVB、分区容量、备份和回滚路径。
 
 ## 许可证与上游
