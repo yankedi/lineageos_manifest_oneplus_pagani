@@ -45,14 +45,18 @@ repo sync
 | `kernel/oneplus/sm8750` | [`LineageOS/android_kernel_oneplus_sm8750`](https://github.com/LineageOS/android_kernel_oneplus_sm8750) | `lineage-23.2` |
 | `kernel/oneplus/sm8750-devicetrees` | [`LineageOS/android_kernel_oneplus_sm8750-devicetrees`](https://github.com/LineageOS/android_kernel_oneplus_sm8750-devicetrees) | `lineage-23.2` |
 | `hardware/oplus` | [`LineageOS/android_hardware_oplus`](https://github.com/LineageOS/android_hardware_oplus) | `lineage-23.2` |
+| `hardware/qcom-caf/sm8750/display/core` | [`yankedi/lineageos_android_vendor_qcom_opensource_display-core`](https://github.com/yankedi/lineageos_android_vendor_qcom_opensource_display-core) | `lineage-23.2-caf-sm8750` |
+| `hardware/qcom-caf/sm8750/display/hal` | [`yankedi/lineageos_android_hardware_qcom_display`](https://github.com/yankedi/lineageos_android_hardware_qcom_display) | `lineage-23.2-caf-sm8750` |
 | `vendor/oneplus/pagani` | [`yankedi/proprietary_vendor_oneplus_pagani`](https://github.com/yankedi/proprietary_vendor_oneplus_pagani) | `lineage-23.2` |
 | `vendor/oneplus/sm8750-common` | [`TheMuppets/proprietary_vendor_oneplus_sm8750-common`](https://github.com/TheMuppets/proprietary_vendor_oneplus_sm8750-common) | `lineage-23.2` |
 
-LineageOS 其余平台项目继续由官方 `lineage-23.2` manifest 管理。以上项目同样跟踪各自的 `lineage-23.2` 分支；执行 `repo sync` 会更新到当时的最新提交。
+LineageOS 其余平台项目继续由官方 `lineage-23.2` manifest 管理。以上项目跟踪表中列出的分支；执行 `repo sync` 会更新到当时的最新提交，不固定提交 SHA。
+
+两棵 SM8750 display Fork 收录指纹显示所需的 DRM `fingerprint_mask`/`hbm_enable` 属性支持、UDFPS 图层 mask 和 `oplus_udfps` 构建开关。替换按源码路径限定，只影响 SM8750；其他 SoC 的同名 display 项目继续使用上游。
 
 ## Proprietary blobs
 
-本 manifest 固定并同步经过当前构建使用的两棵 Vendor 树：
+本 manifest 跟踪并同步两棵 Vendor 树，当前使用的提取基线为：
 
 - pagani 专用文件来自 `PKX110_16.0.3.501(CN01)`；
 - SM8750 common 文件来自设备树记录的 `CPH2653_16.0.9.401(EX01)` 基线。
@@ -85,7 +89,7 @@ NixOS 不是 Android 官方构建宿主环境，需要在能够提供标准 Linu
 ## 更新与复现边界
 
 - 本 manifest 仓库自身跟随 LineageOS 官方 `lineage-23.2` manifest 历史。
-- `snippets/pagani.xml` 跟踪 pagani 相关源码和 Vendor 项目的 `lineage-23.2` 分支，因此不同时间同步得到的提交可能不同。
+- `snippets/pagani.xml` 跟踪上表分支（包括 display 的 `lineage-23.2-caf-sm8750`），因此不同时间同步得到的提交可能不同。
 - 若要复现某次构建，应保存该次同步后生成的完整 `repo manifest -r`、构建环境、vendor 输入和产物哈希。
 - 构建成功不等于可以安全刷写。刷写前仍需确认设备型号、槽位、AVB、分区容量、备份和回滚路径。
 

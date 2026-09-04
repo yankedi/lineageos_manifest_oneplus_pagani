@@ -42,6 +42,22 @@
            revision="refs/heads/lineage-23.2"
            clone-depth="1" />
 
+  <!-- Replace only the SM8750 display projects; keep other SoC variants upstream. -->
+  <remove-project name="LineageOS/android_vendor_qcom_opensource_display-core"
+                  path="hardware/qcom-caf/sm8750/display/core" />
+  <project path="hardware/qcom-caf/sm8750/display/core"
+           name="yankedi/lineageos_android_vendor_qcom_opensource_display-core"
+           remote="github"
+           revision="refs/heads/lineage-23.2-caf-sm8750"
+           groups="qcom" />
+  <remove-project name="LineageOS/android_hardware_qcom_display"
+                  path="hardware/qcom-caf/sm8750/display/hal" />
+  <project path="hardware/qcom-caf/sm8750/display/hal"
+           name="yankedi/lineageos_android_hardware_qcom_display"
+           remote="github"
+           revision="refs/heads/lineage-23.2-caf-sm8750"
+           groups="qcom" />
+
   <!-- Proprietary vendor trees used by pagani. -->
   <project path="vendor/oneplus/pagani"
            name="yankedi/proprietary_vendor_oneplus_pagani"
